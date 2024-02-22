@@ -9,6 +9,11 @@ class ProductQueries
 {
     public function productPaginateList()
     {
-        return Product::select('id', 'name', 'price')->get();
+        return Product::select('id', 'name', 'price')->paginate(10);
+    }
+
+    public function add(array $validatedData)
+    {
+        Product::create($validatedData);
     }
 }

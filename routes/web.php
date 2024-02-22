@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(
     function (): void {
         Route::controller(ProductController::class)->group(function () {
             Route::get('products', 'index')->name('products-list');
+            Route::get('product-create', 'create')->name('product-create');
         });
     }
 );
