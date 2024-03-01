@@ -30,4 +30,17 @@ class ProductController extends Controller
         $this->productQueries->add($request->validated());
         return to_route('products-list')->with('success', 'Product added successfully.');
     }
+
+    public function edit(int $productId)
+    {
+        return Inertia::render('Products/form', [
+            'product' => $this->productQueries->getProductById($productId),
+        ]);
+    }
+
+    public function update(ProductRequest $request, int $productId)
+    {
+        $this->productQueries->update($request->validated(), $productId);
+        return to_route('products-list')->with('success', 'Product updated successfully.');
+    }
 }
