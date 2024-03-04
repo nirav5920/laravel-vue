@@ -38,6 +38,8 @@ Route::middleware(['auth'])->group(
             Route::post('product-store', 'store')->name('product-store');
             Route::get('product-edit/{id}', 'edit')->name('product-edit');
             Route::post('product-update/{id}', 'update')->name('product-update');
+            Route::post('product-delete/{id}', 'delete')->name('product-delete');
+            Route::get('product-toggle-status/{id}', 'toggleStatus')->name('product-toggle-status');
         });
     }
 );

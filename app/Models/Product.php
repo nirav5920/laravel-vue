@@ -14,4 +14,8 @@ class Product extends Model
         'price',
         'status',
     ];
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 }

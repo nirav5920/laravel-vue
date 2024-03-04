@@ -14,18 +14,20 @@ const isEditing = computed(() => !!props.product);
 const form = useForm({
     name: props.product ? props.product.name : '',
     price: props.product ? props.product.price : '',
-    status: props.product ? props.product.status : '',
+    status: props.product ? props.product.status : false,
 });
 
 const submit = () => {
     if (props.product && props.product.id) {
-        form.post(route('product-update', product.id));
+        form.post(route('product-update', props.product.id));
+        return;
     }
     form.post(route('product-store'));
 }
-console.log(form.status);
 </script>
+
 <template>
+
     <Head :title="isEditing ? 'Edit Product' : 'Create Product'" />
     <AuthenticatedLayout>
         <template #header>
@@ -52,7 +54,7 @@ console.log(form.status);
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="hidden" name="status" value="0">
                             <input type="checkbox" value="1" class="sr-only peer" name="status" v-model="form.status"
-                                :checked="(form.status === 1) ? 'checked' : ''">
+                                :checked="form.status">
                             <div
                                 class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                             </div>
@@ -61,8 +63,9 @@ console.log(form.status);
                     </div>
                     <div class="flex gap-2">
                         <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">{{
-                                isEditing ? 'Update' : 'Save' }}</button>
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                            {{ isEditing ? 'Update' : 'Save' }}
+                        </button>
                         <Link :href="route('products-list')"
                             class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                         Cancel</Link>

@@ -43,4 +43,16 @@ class ProductController extends Controller
         $this->productQueries->update($request->validated(), $productId);
         return to_route('products-list')->with('success', 'Product updated successfully.');
     }
+
+    public function delete(int $productId)
+    {
+        $this->productQueries->delete($productId);
+        return to_route('products-list')->with('success', 'Product deleted successfully.');
+    }
+
+    public function toggleStatus(int $productId)
+    {
+        $this->productQueries->toggleStatus($productId);
+        return to_route('products-list')->with('success', 'Product status updated');
+    }
 }
