@@ -7,6 +7,9 @@ const props = defineProps({
     product: {
         type: Object,
         default: null
+    },
+    parentCategories: {
+        type: Object
     }
 });
 const isEditing = computed(() => !!props.product);
@@ -41,6 +44,17 @@ const submit = () => {
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required>
                         <div v-if="form.errors.name" class="text-red-600">{{ form.errors.name }}</div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Select categories</label>
+                        <select v-model="selectedCategory" @change="getChildCategories"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">Select Category</option>
+                            <option :value="parentCategory.id" v-for="parentCategory in parentCategories">
+                                {{ parentCategory.name }}
+                            </option>
+                            {{ parentCategories }}
+                        </select>
                     </div>
                     <div class="mb-5">
                         <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Price</label>

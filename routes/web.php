@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -41,6 +42,12 @@ Route::middleware(['auth'])->group(
             Route::post('product-delete/{id}', 'delete')->name('product-delete');
             Route::get('product-toggle-status/{id}', 'toggleStatus')->name('product-toggle-status');
         });
+
+        Route::controller(CategoryController::class)->group(
+            function () {
+                Route::get('get-parent-categories', 'getParentCategories')->name('get-parent-categories');
+            }
+        );
     }
 );
 

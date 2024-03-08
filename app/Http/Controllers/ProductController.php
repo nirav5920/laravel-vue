@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Category\CategoryQueries;
 use App\Domain\Product\ProductQueries;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
@@ -22,7 +23,10 @@ class ProductController extends Controller
 
     public function create()
     {
-        return Inertia::render('Products/form');
+        $categoryQueries = resolve(CategoryQueries::class);
+        return Inertia::render('Products/form', [
+            'parentCategories' => $categoryQueries->getParentCategories(),
+        ]);
     }
 
     public function store(ProductRequest $request)
@@ -33,8 +37,10 @@ class ProductController extends Controller
 
     public function edit(int $productId)
     {
+        $categoryQueries = resolve(CategoryQueries::class);
         return Inertia::render('Products/form', [
             'product' => $this->productQueries->getProductById($productId),
+            'parentCategories' => $categoryQueries->getParentCategories(),
         ]);
     }
 
